@@ -61,10 +61,18 @@ cd build/bin/
 
 # or run in interactive mode
 ./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg -i
+
+# run with reasoning enabled (think mode without token limit)
+./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg --jinja --reasoning-budget -1 -p "what is it?"
+
+# run with reasoning disabled (no think mode)
+./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg --jinja --reasoning-budget 0 -p "what is it?"
+
+
 ```
 
 **Argument Reference:**
 
-| Argument | `-m, --model` | `--mmproj` | `--image` | `-p, --prompt` | `-c, --ctx-size` |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Description | Path to the language model | Path to the vision model | Path to the input image | The prompt | Maximum context size |
+| Argument | `-m, --model` | `--mmproj` | `--image` | `-p, --prompt` | `-c, --ctx-size` | `--reasoning-budget` | `--jinja` |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Description | Path to the language model | Path to the vision model | Path to the input image | The prompt | Maximum context size | Maximum tokens for model reasoning (-1 for unlimited, 0 for disabled) | Enable Jinja template rendering |

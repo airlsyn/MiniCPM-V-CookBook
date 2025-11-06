@@ -63,10 +63,16 @@ cd build/bin/
 
 # 或以交互模式运行
 ./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg -i
+
+# 或以思考模式运行(思考输出的token无限制)
+./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg --jinja --reasoning-budget -1 -p "what is it?"
+
+# 或以禁止思考模式运行
+./llama-mtmd-cli -m ../MiniCPM-V-4_5/model/ggml-model-Q4_K_M.gguf --mmproj ../MiniCPM-V-4_5/mmproj-model-f16.gguf -c 4096 --temp 0.7 --top-p 0.8 --top-k 100 --repeat-penalty 1.05 --image xx.jpg --jinja --reasoning-budget 0 -p "what is it?"
 ```
 
 **命令行参数解析:**
 
-| 参数 | `-m, --model` | `--mmproj` | `--image` | `-p, --prompt` | `-c, --ctx-size` |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| 含义 | 语言模型路径 | 视觉模型路径 | 输入图片路径 | 提示词 | 输入上下文最大长度 |
+| 参数 | `-m, --model` | `--mmproj` | `--image` | `-p, --prompt` | `-c, --ctx-size` | `--reasoning-budget` | `--jinja` |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 含义 | 语言模型路径 | 视觉模型路径 | 输入图片路径 | 提示词 | 输入上下文最大长度 | 最大思考输出token数量 | 使用jinja模板 |
