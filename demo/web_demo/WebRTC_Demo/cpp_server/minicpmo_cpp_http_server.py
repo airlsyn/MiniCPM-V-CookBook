@@ -58,6 +58,9 @@ DEFAULT_N_GPU_LAYERS = int(os.environ.get("N_GPU_LAYERS", "99"))
 # 固定音色文件（用于 voice cloning）
 FIXED_TIMBRE_PATH = os.environ.get("REF_AUDIO", "")  # 默认在启动时从 LLAMACPP_ROOT 推导
 
+# 视觉编码器后端: "metal"(默认，GPU) 或 "coreml"(ANE加速，macOS专用)
+VISION_BACKEND = os.environ.get("VISION_BACKEND", "metal")
+
 
 def auto_detect_llm_model(model_dir: str) -> str:
     """自动从模型目录检测 LLM GGUF 文件
@@ -315,6 +318,9 @@ def restart_cpp_server():
             "tts_gpu_layers": 100,
             "output_dir": CPP_OUTPUT_DIR,
         }
+        
+        # 视觉编码器后端
+        cpp_request["vision_backend"] = VISION_BACKEND
         
         # 使用固定音色文件
         if os.path.exists(FIXED_TIMBRE_PATH):
@@ -808,6 +814,9 @@ async def lifespan(app: FastAPI):
             "output_dir": CPP_OUTPUT_DIR,
         }
         
+        # 视觉编码器后端
+        pre_init_request["vision_backend"] = VISION_BACKEND
+        
         # 使用固定音色文件进行预初始化
         if os.path.exists(FIXED_TIMBRE_PATH):
             pre_init_request["voice_audio"] = FIXED_TIMBRE_PATH
@@ -1100,6 +1109,9 @@ async def init_sys_prompt(request: InitSysPromptRequest):
                 "output_dir": CPP_OUTPUT_DIR,  # 🔧 [多实例支持] 传递配置的输出目录
                 "language": language,        # 🔧 [语言切换] "zh" 或 "en"
             }
+            
+            # 视觉编码器后端
+            cpp_request["vision_backend"] = VISION_BACKEND
             
             # 🔧 [高清模式] 设置 max_slice_nums
             if high_quality_mode:
@@ -2581,6 +2593,8 @@ if __name__ == "__main__":
     parser.add_argument("--simplex", action="store_true", help="默认使用单工模式（优先级高于 --duplex）")
     parser.add_argument("--output-dir", type=str, default=None, 
                         help="C++ 输出目录（默认基于端口号: ./tools/omni/output_<port>）")
+    parser.add_argument("--vision-backend", type=str, default="metal", choices=["metal", "coreml"],
+                        help="视觉编码器后端: metal(默认GPU) 或 coreml(ANE加速，macOS专用)")
     
     args = parser.parse_args()
     
@@ -2632,6 +2646,20 @@ if __name__ == "__main__":
         globals()['FIXED_TIMBRE_PATH'] = os.path.join(llamacpp_root, "tools/omni/assets/default_ref_audio.wav")
     FIXED_TIMBRE_PATH = globals()['FIXED_TIMBRE_PATH']
     
+    # 5. 设置视觉编码器后端
+    if args.vision_backend == "coreml":
+        vision_coreml = os.path.join(model_dir, "vision", "coreml_minicpmo45_vit_all_f16.mlmodelc")
+        if os.path.exists(vision_coreml):
+            globals()['VISION_BACKEND'] = "coreml"
+            print(f"✅ Vision backend: CoreML/ANE ({vision_coreml})", flush=True)
+        else:
+            print(f"⚠️  CoreML model not found at {vision_coreml}, falling back to Metal", flush=True)
+            globals()['VISION_BACKEND'] = "metal"
+    else:
+        globals()['VISION_BACKEND'] = "metal"
+        print(f"✅ Vision backend: Metal (GPU)", flush=True)
+    VISION_BACKEND = globals()['VISION_BACKEND']
+    
     # 确定默认模式：--simplex 优先级最高，否则看 --duplex
     if args.simplex:
         default_duplex_mode = False
@@ -2672,6 +2700,7 @@ if __name__ == "__main__":
     print(f"  LLM_MODEL:     {llm_model}", flush=True)
     print(f"  OUTPUT_DIR:    {CPP_OUTPUT_DIR}", flush=True)
     print(f"  REF_AUDIO:     {FIXED_TIMBRE_PATH}", flush=True)
+    print(f"  VISION_BACKEND: {VISION_BACKEND}", flush=True)
     print(f"{'='*60}", flush=True)
     print(f"", flush=True)
     
