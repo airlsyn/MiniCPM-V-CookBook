@@ -625,12 +625,22 @@ def start_cpp_server(model_dir: str, gpu_devices: str, port: int):
     # 查找 llama-server 可执行文件
     # 优先使用 build/bin，回退到 preset 目录
     import platform
-    server_bin = os.path.join(llamacpp_root, "build/bin/llama-server")
-    if not os.path.exists(server_bin):
-        if platform.system() == "Darwin":
-            server_bin = os.path.join(llamacpp_root, "build-arm64-apple-clang-release/bin/llama-server")
-        else:
-            server_bin = os.path.join(llamacpp_root, "build-x64-linux-cuda-release/bin/llama-server")
+    server_bin = None
+    candidates = [
+        os.path.join(llamacpp_root, "build/bin/llama-server"),              # Linux/macOS default
+        os.path.join(llamacpp_root, "build/bin/Release/llama-server.exe"),  # Windows MSVC
+        os.path.join(llamacpp_root, "build/bin/llama-server.exe"),          # Windows other
+    ]
+    if platform.system() == "Darwin":
+        candidates.append(os.path.join(llamacpp_root, "build-arm64-apple-clang-release/bin/llama-server"))
+    elif platform.system() != "Windows":
+        candidates.append(os.path.join(llamacpp_root, "build-x64-linux-cuda-release/bin/llama-server"))
+    for c in candidates:
+        if os.path.exists(c):
+            server_bin = c
+            break
+    if server_bin is None:
+        server_bin = candidates[0]  # fallback for error message
     
     # model_dir 可以是绝对路径或相对路径
     if os.path.isabs(model_dir):
