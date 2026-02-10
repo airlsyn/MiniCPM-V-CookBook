@@ -101,11 +101,9 @@ Once started, open in your browser: **https://localhost:8088**
 
 Uses Docker for frontend/backend/LiveKit, runs C++ inference locally.
 
-> The following prerequisites and deployment steps are **only needed for Option B**. Option A handles everything automatically.
+> The following steps are **only needed for Option B**. Option A handles everything automatically.
 
-#### Prerequisites
-
-##### 1. Install Docker
+#### 1. Install Docker
 
 <details>
 <summary><b>macOS</b></summary>
@@ -178,7 +176,7 @@ docker --version
 
 </details>
 
-##### 2. Build llamacpp-omni Inference Service
+#### 2. Build llamacpp-omni Inference Service
 
 <details>
 <summary><b>macOS (Apple Silicon)</b></summary>
@@ -249,7 +247,7 @@ dir build\bin\Release\llama-server.exe
 
 </details>
 
-##### 3. Prepare GGUF Model Files
+#### 3. Prepare GGUF Model Files
 
 We provide a **one-click download script** `download_models.sh` that automatically downloads all required model files (~8.3GB total), with resume support.
 
@@ -294,9 +292,7 @@ Available LLM quantizations: `Q4_0`, `Q4_1`, `Q4_K_M` (recommended), `Q4_K_S`, `
 
 </details>
 
-#### Deploy
-
-##### Optional: Load Pre-built Docker Images
+#### 4. Optional: Load Pre-built Docker Images
 
 If you don't want to build frontend/backend images yourself, download pre-built images:
 
@@ -308,7 +304,7 @@ docker load -i o45-frontend.tar
 docker load -i omini_backend_code/omni_backend.tar
 ```
 
-##### One-Click Start
+#### 5. One-Click Start
 
 <details>
 <summary><b>macOS / Linux (deploy_all.sh)</b></summary>

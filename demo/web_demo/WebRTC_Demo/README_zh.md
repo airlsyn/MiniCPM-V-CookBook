@@ -101,11 +101,9 @@ bash oneclick.sh stop
 
 使用 Docker 运行前端/后端/LiveKit，本地运行 C++ 推理服务。
 
-> 以下前置准备和部署步骤**仅方案 B 需要**，方案 A 会自动处理。
+> 以下步骤**仅方案 B 需要**，方案 A 会自动处理。
 
-#### 前置准备
-
-##### 1. 安装 Docker
+#### 1. 安装 Docker
 
 <details>
 <summary><b>macOS</b></summary>
@@ -178,7 +176,7 @@ docker --version
 
 </details>
 
-##### 2. 编译 llamacpp-omni 推理服务
+#### 2. 编译 llamacpp-omni 推理服务
 
 <details>
 <summary><b>macOS (Apple Silicon)</b></summary>
@@ -249,7 +247,7 @@ dir build\bin\Release\llama-server.exe
 
 </details>
 
-##### 3. 准备 GGUF 模型文件
+#### 3. 准备 GGUF 模型文件
 
 我们提供了**一键下载脚本** `download_models.sh`，自动下载所有所需的模型文件（共约 8.3GB），支持断点续传。
 
@@ -294,9 +292,7 @@ dir build\bin\Release\llama-server.exe
 
 </details>
 
-#### 部署步骤
-
-##### 可选：加载预构建 Docker 镜像
+#### 4. 可选：加载预构建 Docker 镜像
 
 如果不想自行构建前端/后端镜像，可下载预构建镜像：
 
@@ -308,7 +304,7 @@ docker load -i o45-frontend.tar
 docker load -i omini_backend_code/omni_backend.tar
 ```
 
-##### 一键启动
+#### 5. 一键启动
 
 <details>
 <summary><b>macOS / Linux (deploy_all.sh)</b></summary>
