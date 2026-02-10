@@ -132,7 +132,7 @@ docker --version
 
 ```bash
 # 克隆并进入项目目录
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # 编译（macOS 默认启用 Metal 加速）
@@ -159,7 +159,7 @@ macOS 支持通过 CoreML 将视觉编码器运行在 Apple Neural Engine（ANE/
 
 ```bash
 # 克隆并进入项目目录
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # 编译（启用 CUDA 加速）
@@ -181,7 +181,7 @@ ls -la build/bin/llama-server
 
 ```powershell
 # 克隆并进入项目目录
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # 编译（启用 CUDA 加速）
@@ -448,7 +448,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy_all_win.ps1
 - 对话过程中即时反馈
 
 ### 🚀 原生支持 llamacpp-omni
-- 无缝集成 [llamacpp-omni](https://github.com/OpenBMB/llama.cpp-omni) 作为推理后端
+- 无缝集成 [llamacpp-omni](https://github.com/tc-mb/llama.cpp-omni) 作为推理后端
 - 快速部署，简单配置
 - 高效的资源利用
 
@@ -467,4 +467,4 @@ powershell -ExecutionPolicy Bypass -File .\deploy_all_win.ps1
 ## 相关资源
 
 - [MiniCPM-o 4.5 模型](https://huggingface.co/openbmb/MiniCPM-o-4_5)
-- [llamacpp-omni 推理后端](https://github.com/OpenBMB/llama.cpp-omni)
+- [llamacpp-omni 推理后端](https://github.com/tc-mb/llama.cpp-omni)

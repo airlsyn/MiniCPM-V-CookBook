@@ -132,7 +132,7 @@ docker --version
 
 ```bash
 # Clone and enter the project directory
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # Build (Metal acceleration enabled by default on macOS)
@@ -159,7 +159,7 @@ macOS supports running the Vision encoder on the Apple Neural Engine (ANE/NPU) v
 
 ```bash
 # Clone and enter the project directory
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # Build with CUDA support
@@ -181,7 +181,7 @@ ls -la build/bin/llama-server
 
 ```powershell
 # Clone and enter the project directory
-git clone https://github.com/OpenBMB/llama.cpp-omni.git
+git clone https://github.com/tc-mb/llama.cpp-omni.git
 cd llama.cpp-omni
 
 # Build with CUDA support (using Visual Studio generator)
@@ -448,7 +448,7 @@ powershell -ExecutionPolicy Bypass -File .\deploy_all_win.ps1
 - Immediate feedback during conversations
 
 ### 🚀 Native llamacpp-omni Support
-- Seamlessly integrates with [llamacpp-omni](https://github.com/OpenBMB/llama.cpp-omni) as the inference backend
+- Seamlessly integrates with [llamacpp-omni](https://github.com/tc-mb/llama.cpp-omni) as the inference backend
 - Quick deployment and easy setup
 - Efficient resource utilization
 
@@ -467,4 +467,4 @@ powershell -ExecutionPolicy Bypass -File .\deploy_all_win.ps1
 ## Related Resources
 
 - [MiniCPM-o 4.5 Model](https://huggingface.co/openbmb/MiniCPM-o-4_5)
-- [llamacpp-omni Backend](https://github.com/OpenBMB/llama.cpp-omni)
+- [llamacpp-omni Backend](https://github.com/tc-mb/llama.cpp-omni)
