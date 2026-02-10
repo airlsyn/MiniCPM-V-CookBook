@@ -296,7 +296,7 @@ Available LLM quantizations: `Q4_0`, `Q4_1`, `Q4_K_M` (recommended), `Q4_K_S`, `
 
 If you don't want to build frontend/backend images yourself, download pre-built images:
 
-📦 [Download Docker Image](https://drive.google.com/file/d/1i7HrGBZE3E-6lsrHjQgaEQK0Qxdi6tSN/view?usp=sharing)
+📦 [Download Docker Image](https://drive.google.com/file/d/191h2OJYir9aAL4KIE-mFF_XJ1jT6gnxj/view?usp=sharing)
 
 ```bash
 # Extract and load images (skip if you already have images)

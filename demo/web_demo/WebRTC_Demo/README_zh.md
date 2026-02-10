@@ -296,7 +296,7 @@ dir build\bin\Release\llama-server.exe
 
 如果不想自行构建前端/后端镜像，可下载预构建镜像：
 
-📦 [下载 Docker 镜像](https://drive.google.com/file/d/1i7HrGBZE3E-6lsrHjQgaEQK0Qxdi6tSN/view?usp=sharing)
+📦 [下载 Docker 镜像](https://drive.google.com/file/d/191h2OJYir9aAL4KIE-mFF_XJ1jT6gnxj/view?usp=sharing)
 
 ```bash
 # 解压并加载镜像（已有镜像可跳过此步）
