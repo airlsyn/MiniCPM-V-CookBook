@@ -104,8 +104,8 @@ NPM_REGISTRY="${NPM_REGISTRY:-https://registry.npmmirror.com}"
 LIVEKIT_PORT="${LIVEKIT_PORT:-7880}"
 BACKEND_PORT="${BACKEND_PORT:-8021}"
 FRONTEND_PORT="${FRONTEND_PORT:-8088}"
-# Frontend mode: dev=Vite dev server (hot reload)  prod=built static server (faster and more stable)
-FRONTEND_MODE="${FRONTEND_MODE:-dev}"
+# Frontend mode: prod=built static server (faster and more stable)  dev=Vite dev server (hot reload)
+FRONTEND_MODE="${FRONTEND_MODE:-prod}"
 CPP_SERVER_PORT="${CPP_SERVER_PORT:-9060}"
 CPP_HEALTH_PORT=$((CPP_SERVER_PORT + 1))
 CPP_LLAMA_PORT=$((CPP_SERVER_PORT + 10000))
