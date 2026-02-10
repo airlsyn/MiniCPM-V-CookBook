@@ -24,6 +24,8 @@ The full model set (LLM Q4_K_M + Vision/Audio/TTS F16 + Token2Wav) totals **~8.3
 | **Duplex** | M4 Pro, 36GB+ RAM | **M4 Max, 64GB+ RAM** | Real-time streaming requires high memory bandwidth; M4 Max verified to achieve RTF < 1.0 |
 
 > **Note**: macOS uses unified memory — model weights, KV cache, and compute buffers all share system RAM. For duplex mode, the primary bottleneck is compute throughput rather than memory capacity. M1/M2/M3 chips lack the bandwidth and compute power needed for real-time duplex streaming.
+>
+> **Tip**: If you only have 16GB RAM, close other memory-intensive applications (browsers, IDEs, etc.) before running the demo to ensure sufficient memory for model loading.
 
 </details>
 
