@@ -198,7 +198,23 @@ dir build\bin\Release\llama-server.exe
 
 ### 3. Prepare GGUF Model Files
 
-Download and organize the model files with the following structure:
+We provide a **one-click download script** that automatically downloads all required model files (~8.3GB total). The script tests HuggingFace and ModelScope to pick the faster source.
+
+```bash
+# Download all required GGUF models (auto-selects fastest source)
+./download_models.sh --model-dir /path/to/gguf
+
+# Use ModelScope (faster in China)
+./download_models.sh --model-dir /path/to/gguf --source ms
+
+# Use HuggingFace mirror
+./download_models.sh --model-dir /path/to/gguf --hf-mirror https://hf-mirror.com
+
+# Choose a different LLM quantization (default: Q4_K_M)
+./download_models.sh --model-dir /path/to/gguf --quant Q8_0
+```
+
+The script downloads these files and supports **resume** on interruption:
 
 ```
 <MODEL_DIR>/
@@ -217,6 +233,8 @@ Download and organize the model files with the following structure:
     ├── hifigan2.gguf
     └── prompt_cache.gguf
 ```
+
+Available LLM quantizations: `Q4_0`, `Q4_1`, `Q4_K_M` (recommended), `Q4_K_S`, `Q5_0`, `Q5_1`, `Q5_K_M`, `Q5_K_S`, `Q6_K`, `Q8_0`, `F16`
 
 ## Quick Start
 

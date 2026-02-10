@@ -198,7 +198,23 @@ dir build\bin\Release\llama-server.exe
 
 ### 3. 准备 GGUF 模型文件
 
-下载并按以下结构组织模型文件：
+我们提供了**一键下载脚本**，自动下载所有所需的模型文件（共约 8.3GB）。脚本会测速 HuggingFace 和 ModelScope，自动选择更快的源。
+
+```bash
+# 下载所有必需的 GGUF 模型（自动选择最快源）
+./download_models.sh --model-dir /path/to/gguf
+
+# 使用 ModelScope（国内更快）
+./download_models.sh --model-dir /path/to/gguf --source ms
+
+# 使用 HuggingFace 镜像
+./download_models.sh --model-dir /path/to/gguf --hf-mirror https://hf-mirror.com
+
+# 选择不同的 LLM 量化版本（默认 Q4_K_M）
+./download_models.sh --model-dir /path/to/gguf --quant Q8_0
+```
+
+脚本下载以下文件，支持**断点续传**：
 
 ```
 <MODEL_DIR>/
@@ -217,6 +233,8 @@ dir build\bin\Release\llama-server.exe
     ├── hifigan2.gguf
     └── prompt_cache.gguf
 ```
+
+可选 LLM 量化版本：`Q4_0`、`Q4_1`、`Q4_K_M`（推荐）、`Q4_K_S`、`Q5_0`、`Q5_1`、`Q5_K_M`、`Q5_K_S`、`Q6_K`、`Q8_0`、`F16`
 
 ## 快速开始
 
