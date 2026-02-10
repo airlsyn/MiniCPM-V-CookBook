@@ -1154,15 +1154,31 @@ start_frontend() {
         ok "HTTPS certificate is ready"
     fi
 
+    # Pass CPP_MODE to frontend so it can gray out unavailable tabs
+    info "Frontend will reflect CPP_MODE=$CPP_MODE (unavailable mode tab shown as disabled)"
+    export VITE_CPP_MODE="$CPP_MODE"
+
     if [[ "$FRONTEND_MODE" == "prod" ]]; then
         # Production mode: build first, then serve with static server
         info "Frontend mode: production build (prod)"
-        if [[ ! -d "$FRONTEND_DIR/dist" ]] || [[ "${FORCE_BUILD:-0}" == "1" ]]; then
+        # Check if rebuild is needed (mode changed or dist missing)
+        local need_build=false
+        local mode_marker="$FRONTEND_DIR/dist/.cpp_mode"
+        if [[ ! -d "$FRONTEND_DIR/dist" ]]; then
+            need_build=true
+        elif [[ "${FORCE_BUILD:-0}" == "1" ]]; then
+            need_build=true
+        elif [[ ! -f "$mode_marker" ]] || [[ "$(cat "$mode_marker" 2>/dev/null)" != "$CPP_MODE" ]]; then
+            info "CPP_MODE changed since last build, rebuilding frontend..."
+            need_build=true
+        fi
+        if [[ "$need_build" == "true" ]]; then
             info "Building frontend..."
-            (cd "$FRONTEND_DIR" && pnpm run build:external) || {
+            (cd "$FRONTEND_DIR" && VITE_CPP_MODE="$CPP_MODE" pnpm run build:external) || {
                 err "Frontend build failed"
                 return 1
             }
+            echo "$CPP_MODE" > "$mode_marker"
             ok "Frontend build complete"
         else
             ok "Frontend already built (dist/ exists, set FORCE_BUILD=1 to force rebuild)"
@@ -1182,7 +1198,7 @@ start_frontend() {
         info "Frontend mode: development server (dev)"
         (
             cd "$FRONTEND_DIR"
-            pnpm run dev:external \
+            VITE_CPP_MODE="$CPP_MODE" pnpm run dev:external \
                 > "$FRONTEND_LOG" 2>&1 &
             echo $! > "$FRONTEND_PID"
         )
